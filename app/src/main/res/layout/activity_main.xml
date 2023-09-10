@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewNombres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombres"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextNombres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/textViewNombres"
+        android:layout_alignBaseline="@+id/textViewNombres"
+        android:hint="Ingrese los nombres"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textViewApellidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apellidos"
+        android:layout_below="@+id/textViewNombres"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextApellidos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/textViewApellidos"
+        android:layout_alignBaseline="@+id/textViewApellidos"
+        android:hint="Ingrese los apellidos"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textViewCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correo"
+        android:layout_below="@+id/textViewApellidos"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/textViewCorreo"
+        android:layout_alignBaseline="@+id/textViewCorreo"
+        android:hint="Ingrese el correo"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/textViewCarrera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carrera"
+        android:layout_below="@+id/editTextCorreo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinnerCarrera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextCorreo"
+        android:layout_toEndOf="@+id/textViewCarrera"
+        android:layout_marginTop="16dp"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/btnAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Alumno"
+        android:layout_below="@+id/spinnerCarrera"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnListar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Alumnos"
+        android:layout_below="@+id/btnAgregar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnEditarAlumno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar"
+        android:layout_below="@+id/btnListar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnEliminarAlumno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar"
+        android:layout_below="@+id/btnListar"
+        android:layout_toEndOf="@+id/btnEditarAlumno"
+        android:layout_marginTop="16dp" />
+
+    <ListView
+        android:id="@+id/listViewAlumnos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnEliminarAlumno"
+        android:layout_marginTop="16dp" />
+
+    <ListView
+        android:id="@+id/listViewAlumnos2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnEliminarAlumno"
+        android:layout_marginTop="16dp" />
+
+
+</RelativeLayout>
