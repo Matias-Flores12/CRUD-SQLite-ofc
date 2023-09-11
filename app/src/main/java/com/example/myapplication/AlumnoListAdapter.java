@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.myapplication.Alumno;
 
 import java.util.List;
@@ -16,21 +17,26 @@ import java.util.List;
 public class AlumnoListAdapter extends BaseAdapter {
     private Context context;
     private List<Alumno> listaAlumnos;
+    private int idposi;
+    private DAOemer daOemer;
+
     private OnEditarClickListener editarClickListener;
-    private OnEliminarClickListener eliminarClickListener;
+//    private OnEliminarClickListener eliminarClickListener;
 
     public AlumnoListAdapter(Context context, List<Alumno> listaAlumnos) {
         this.context = context;
         this.listaAlumnos = listaAlumnos;
+        daOemer = new DAOemer(context);
+        daOemer.open();
     }
 
     public void setOnEditarClickListener(OnEditarClickListener listener) {
         editarClickListener = listener;
     }
 
-    public void setOnEliminarClickListener(OnEliminarClickListener listener) {
-        eliminarClickListener = listener;
-    }
+//    public void setOnEliminarClickListener(OnEliminarClickListener listener) {
+//        eliminarClickListener = listener;
+//    }
 
     @Override
     public int getCount() {
@@ -53,6 +59,7 @@ public class AlumnoListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_alumno, parent, false);
+         // Asegúrate de que "this" sea un contexto válido
 
             viewHolder = new ViewHolder();
             viewHolder.textViewNombre = convertView.findViewById(R.id.textViewNombre);
@@ -76,18 +83,23 @@ public class AlumnoListAdapter extends BaseAdapter {
         viewHolder.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (editarClickListener != null) {
                     editarClickListener.onEditarClick(alumno);
                 }
+
             }
         });
 
         viewHolder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (eliminarClickListener != null) {
-                    eliminarClickListener.onEliminarClick(alumno);
-                }
+                int alumnoId = listaAlumnos.get(idposi).getId();
+                Toast.makeText(context, ""+alumnoId, Toast.LENGTH_SHORT).show();
+                daOemer.eliminarAlumno(alumnoId);
+                listaAlumnos.remove(idposi);
+                notifyDataSetChanged();
             }
         });
 
@@ -106,7 +118,7 @@ public class AlumnoListAdapter extends BaseAdapter {
         void onEditarClick(Alumno alumno);
     }
 
-    public interface OnEliminarClickListener {
-        void onEliminarClick(Alumno alumno);
-    }
+//    public interface OnEliminarClickListener {
+//        daOemer.eliminarUsuario(id);
+//    }
 }

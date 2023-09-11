@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnAgregar = findViewById(R.id.btnAgregar);
         Button btnListar = findViewById(R.id.btnListar);
-        Button btnEditar = findViewById(R.id.btnEditarAlumno);
-        Button btnEliminar = findViewById(R.id.btnEliminarAlumno);
+//        Button btnEditar = findViewById(R.id.btnEditarAlumno);
+//        Button btnEliminar = findViewById(R.id.btnEliminarAlumno);
 
 
         ListView listViewAlumnos = findViewById(R.id.listViewAlumnos);
@@ -71,74 +71,74 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                int posicionAlumnoParaEditar = listViewAlumnos.getCheckedItemPosition();
-
-                if (posicionAlumnoParaEditar != AdapterView.INVALID_POSITION) {
-
-                    Alumno alumnoParaEditar = listaAlumnos.get(posicionAlumnoParaEditar);
-
-
-                    Intent intent = new Intent(MainActivity.this, EditarAlumnoActivity.class);
-
-
-                    intent.putExtra("alumno_id", alumnoParaEditar.getId());
-
-
-                    startActivity(intent);
-                    Log.d("MainActivity", "Haciendo clic en el botón Editar");
-                } else {
-
-                    Toast.makeText(MainActivity.this, "Seleccione un alumno para editar", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnEliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int posicionAlumnoParaEliminar = listViewAlumnos.getCheckedItemPosition();
-
-                if (posicionAlumnoParaEliminar != AdapterView.INVALID_POSITION) {
-
-                    Alumno alumnoParaEliminar = listaAlumnos.get(posicionAlumnoParaEliminar);
-
-
-                    alumnoIdEliminar = alumnoParaEliminar.getId();
-
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("¿Estás seguro de que deseas eliminar a este alumno?");
-                    builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            eliminarAlumno(alumnoIdEliminar);
-
-
-                            listaAlumnos.remove(posicionAlumnoParaEliminar);
-                            alumnoListAdapter.notifyDataSetChanged();
-
-                            Toast.makeText(MainActivity.this, "Alumno eliminado con éxito", Toast.LENGTH_SHORT).show();
-                            Log.d("MainActivity", "Haciendo clic en el botón Eliminar");
-                        }
-                    });
-                    builder.setNegativeButton("No", null); // No realizar ninguna acción si el usuario hace clic en "No"
-                    builder.show();
-                } else {
-
-                    Toast.makeText(MainActivity.this, "Seleccione un alumno para eliminar", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//        btnEditar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//
+//                int posicionAlumnoParaEditar = listViewAlumnos.getCheckedItemPosition();
+//
+//                if (posicionAlumnoParaEditar != AdapterView.INVALID_POSITION) {
+//
+//                    Alumno alumnoParaEditar = listaAlumnos.get(posicionAlumnoParaEditar);
+//
+//
+//                    Intent intent = new Intent(MainActivity.this, EditarAlumnoActivity.class);
+//
+//
+//                    intent.putExtra("alumno_id", alumnoParaEditar.getId());
+//
+//
+//                    startActivity(intent);
+//                    Log.d("MainActivity", "Haciendo clic en el botón Editar");
+//                } else {
+//
+//                    Toast.makeText(MainActivity.this, "Seleccione un alumno para editar", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//        btnEliminar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                int posicionAlumnoParaEliminar = listViewAlumnos.getCheckedItemPosition();
+//
+//                if (posicionAlumnoParaEliminar != AdapterView.INVALID_POSITION) {
+//
+//                    Alumno alumnoParaEliminar = listaAlumnos.get(posicionAlumnoParaEliminar);
+//
+//
+//                    alumnoIdEliminar = alumnoParaEliminar.getId();
+//
+//
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                    builder.setMessage("¿Estás seguro de que deseas eliminar a este alumno?");
+//                    builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            eliminarAlumno(alumnoIdEliminar);
+//
+//
+//                            listaAlumnos.remove(posicionAlumnoParaEliminar);
+//                            alumnoListAdapter.notifyDataSetChanged();
+//
+//                            Toast.makeText(MainActivity.this, "Alumno eliminado con éxito", Toast.LENGTH_SHORT).show();
+//                            Log.d("MainActivity", "Haciendo clic en el botón Eliminar");
+//                        }
+//                    });
+//                    builder.setNegativeButton("No", null); // No realizar ninguna acción si el usuario hace clic en "No"
+//                    builder.show();
+//                } else {
+//
+//                    Toast.makeText(MainActivity.this, "Seleccione un alumno para eliminar", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+   }
 
     private void agregarAlumno(String nombres, String apellidos, String correo, int carreraId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Alumno> obtenerAlumnos() {
         List<Alumno> listaAlumnos = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Log.d("sexxxxxxxxxxxxxxx", "eliminarAlumno: "+db);
 
         Cursor cursor = db.query("alumno", null, null, null, null, null, null);
 
@@ -183,11 +184,11 @@ public class MainActivity extends AppCompatActivity {
         return listaAlumnos;
     }
 
-    private void eliminarAlumno(int alumnoId) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "id=?";
-        String[] whereArgs = {String.valueOf(alumnoId)};
-        db.delete("alumno", whereClause, whereArgs);
-        db.close();
-    }
+//    private void eliminarAlumno(int alumnoId) {
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        String whereClause = "id=?";
+//        String[] whereArgs = {String.valueOf(alumnoId)};
+//        db.delete("alumno", whereClause, whereArgs);
+//        db.close();
+//    }
 }
