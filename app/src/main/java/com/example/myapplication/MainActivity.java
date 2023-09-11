@@ -52,11 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
                 EditText editTextNombre = findViewById(R.id.editTextNombres);
                 String nombre = editTextNombre.getText().toString();
+                EditText editTextApellido = findViewById(R.id.editTextApellidos);
+                String apellido = editTextApellido.getText().toString();
+                EditText editTextCorreo = findViewById(R.id.editTextCorreo);
+                String correo = editTextCorreo.getText().toString();
 
 
                 Log.d("MainActivity", "Haciendo clic en el botón Agregar");
                 Log.d("MainActivity", "Agregando un alumno: Nombres: " + nombre + ", Apellidos: Apellido, Correo: correo@example.com, Carrera ID: 1");
-                agregarAlumno(nombre, "Apellido", "correo@example.com", 1);
+                agregarAlumno(nombre, apellido, correo, 1);
             }
         });
 
