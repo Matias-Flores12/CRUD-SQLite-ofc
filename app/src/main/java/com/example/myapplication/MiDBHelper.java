@@ -18,8 +18,14 @@ public class MiDBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE carrera (" +
                 "id INTEGER PRIMARY KEY," +
-                "nombre TEXT NOT NULL," +
-                "estado TEXT);");
+                "nombre_carrera TEXT NOT NULL)");
+        db.execSQL("INSERT INTO carrera"
+                + "(id, nombre_carrera) VALUES"
+                + "(1, 'Ingeniería en Sistemas'),"
+                + "(2, 'Ingeniería en Electrónica'),"
+                + "(3, 'Ingeniería en Ciencias de la Computación')");
+
+
 
         db.execSQL("CREATE TABLE alumno (" +
                 "id INTEGER PRIMARY KEY," +

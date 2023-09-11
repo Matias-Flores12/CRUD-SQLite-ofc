@@ -8,11 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -21,22 +17,31 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private MiDBHelper dbHelper;
     private AlumnoListAdapter alumnoListAdapter;
-    private List<Alumno> listaAlumnos;
-    private int alumnoIdEliminar = -1;
 
+    private Spinner spinnerCarreras;
+    private List<Alumno> listaAlumnos;
+    private List<Carrera> listaCarreras;
+    DAOemer dao = new DAOemer(this);
+    private int alumnoIdEliminar = -1;
+//    Spinner spinnerCarreras = findViewById(R.id.spinnerCarrera);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        dao = new DAOemer(this);
+        dao.open();
         dbHelper = new MiDBHelper(this);
+        listaCarreras = new ArrayList<>();
         listaAlumnos = new ArrayList<>();
+        List<String> nombresCarreras = dao.obtenerNombresCarreras();
 
+        Log.d("test", "onCreate: "+listaCarreras+listaAlumnos);
+
+        Spinner spinnerCarreras = findViewById(R.id.spinnerCarrera);
 
         Button btnAgregar = findViewById(R.id.btnAgregar);
         Button btnListar = findViewById(R.id.btnListar);
-//        Button btnEditar = findViewById(R.id.btnEditarAlumno);
-//        Button btnEliminar = findViewById(R.id.btnEliminarAlumno);
+
 
 
         ListView listViewAlumnos = findViewById(R.id.listViewAlumnos);
@@ -45,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         alumnoListAdapter = new AlumnoListAdapter(this, listaAlumnos);
         listViewAlumnos.setAdapter(alumnoListAdapter);
 
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nombresCarreras);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerCarreras.setAdapter(adapter);
 
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,45 +113,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        btnEliminar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int posicionAlumnoParaEliminar = listViewAlumnos.getCheckedItemPosition();
-//
-//                if (posicionAlumnoParaEliminar != AdapterView.INVALID_POSITION) {
-//
-//                    Alumno alumnoParaEliminar = listaAlumnos.get(posicionAlumnoParaEliminar);
-//
-//
-//                    alumnoIdEliminar = alumnoParaEliminar.getId();
-//
-//
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                    builder.setMessage("¿Estás seguro de que deseas eliminar a este alumno?");
-//                    builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            eliminarAlumno(alumnoIdEliminar);
-//
-//
-//                            listaAlumnos.remove(posicionAlumnoParaEliminar);
-//                            alumnoListAdapter.notifyDataSetChanged();
-//
-//                            Toast.makeText(MainActivity.this, "Alumno eliminado con éxito", Toast.LENGTH_SHORT).show();
-//                            Log.d("MainActivity", "Haciendo clic en el botón Eliminar");
-//                        }
-//                    });
-//                    builder.setNegativeButton("No", null); // No realizar ninguna acción si el usuario hace clic en "No"
-//                    builder.show();
-//                } else {
-//
-//                    Toast.makeText(MainActivity.this, "Seleccione un alumno para eliminar", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+
    }
 
     private void agregarAlumno(String nombres, String apellidos, String correo, int carreraId) {
@@ -167,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Alumno> obtenerAlumnos() {
         List<Alumno> listaAlumnos = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Log.d("sexxxxxxxxxxxxxxx", "eliminarAlumno: "+db);
+
 
         Cursor cursor = db.query("alumno", null, null, null, null, null, null);
 
@@ -187,6 +159,12 @@ public class MainActivity extends AppCompatActivity {
 
         return listaAlumnos;
     }
+
+
+
+
+
+
 
 //    private void eliminarAlumno(int alumnoId) {
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
