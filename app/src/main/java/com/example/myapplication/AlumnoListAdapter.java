@@ -3,16 +3,17 @@ package com.example.myapplication;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.example.myapplication.Alumno;
 
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class AlumnoListAdapter extends BaseAdapter {
     private Context context;
@@ -84,10 +85,17 @@ public class AlumnoListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+                int alumnoId = listaAlumnos.get(idposi).getId();
 
-                if (editarClickListener != null) {
-                    editarClickListener.onEditarClick(alumno);
-                }
+                Intent intent = new Intent(context, EditarAlumnoActivity.class);
+
+
+                intent.putExtra("alumno_id", alumnoId);
+
+                context.startActivity(intent);
+
+
+
 
             }
         });
@@ -118,7 +126,5 @@ public class AlumnoListAdapter extends BaseAdapter {
         void onEditarClick(Alumno alumno);
     }
 
-//    public interface OnEliminarClickListener {
-//        daOemer.eliminarUsuario(id);
-//    }
+
 }
